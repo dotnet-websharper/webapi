@@ -29,6 +29,9 @@ module SiteletHosting =
     [<Sealed>]
     type Options =
 
+        /// Registers a sitelet with current options.
+        member Register : Sitelet<'T> -> unit
+
         /// Sets the debug flag to `true`.
         member WithDebug : unit -> Options
 
@@ -66,4 +69,7 @@ module SiteletHosting =
     /// Registers a sitelet for hosting with WebAPI. This is typically called
     /// on application startup.
     val RegisterSitelet : Sitelet<'T> -> Options -> unit
+
+    /// See `Options.Create`.
+    val Configure : HttpConfiguration -> Options
 

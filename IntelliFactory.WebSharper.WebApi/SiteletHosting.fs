@@ -28,6 +28,7 @@ module SiteletHosting =
     open System.Net
     open System.Net.Http
     open System.Net.Http.Headers
+    open System.Text
     open System.Threading
     open System.Threading.Tasks
     open System.Web
@@ -36,6 +37,7 @@ module SiteletHosting =
     open IntelliFactory.WebSharper
     open IntelliFactory.WebSharper.Sitelets
 
+    module Rem = IntelliFactory.WebSharper.Core.Remoting
     module Res = IntelliFactory.WebSharper.Core.Resources
     module P = IntelliFactory.WebSharper.PathConventions
 
@@ -297,3 +299,10 @@ module SiteletHosting =
         let handle req = dispatch cb sitelet req
         let route = WebRoute(routeTemplate config, handle)
         config.HttpConfiguration.Routes.Add(typeof<'T>.Name, route)
+
+    type Options with
+        member opts.Register(s) =
+            RegisterSitelet s opts
+
+    let Configure http =
+        Options.Create(http)
