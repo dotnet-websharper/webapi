@@ -1,7 +1,5 @@
 ﻿// $begin{copyright}
 //
-// This file is part of WebSharper
-//
 // Copyright (c) 2008-2013 IntelliFactory
 //
 // GNU Affero General Public License Usage

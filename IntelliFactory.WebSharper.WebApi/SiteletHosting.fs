@@ -1,7 +1,5 @@
 ﻿// $begin{copyright}
 //
-// This file is part of WebSharper
-//
 // Copyright (c) 2008-2013 IntelliFactory
 //
 // GNU Affero General Public License Usage
@@ -236,7 +234,15 @@ module SiteletHosting =
         let resContext = buildResourceContext cfg
 
         let ( ++ ) a b =
-            VirtualPathUtility.Combine(VirtualPathUtility.AppendTrailingSlash(a), b)
+            let a =
+                match a with
+                | "" -> "/"
+                | _ -> VirtualPathUtility.AppendTrailingSlash(a)
+            let b =
+                match b with
+                | "" -> "."
+                | _ -> b
+            VirtualPathUtility.Combine(a, b)
 
         let resolveUrl u =
             if VirtualPathUtility.IsAppRelative(u) then
@@ -247,12 +253,18 @@ module SiteletHosting =
         member b.GetContext<'T when 'T : equality>(site: Sitelet<'T>, req: Http.Request) : Context<'T> =
             let link = site.Router.Link
             let prefix = cfg.UrlPrefix
+            let p = appPath ++ prefix
             let link x =
                 match link x with
                 | None -> failwithf "Failed to link to %O" (box x)
                 | Some loc ->
                     if loc.IsAbsoluteUri then string loc else
-                        appPath ++ prefix ++ string loc
+                        let loc =
+                            match string loc with
+                            | "" | "/" -> "."
+                            | s when s.StartsWith("/") -> s.Substring(1)
+                            | s -> s
+                        p ++ loc
             {
                 ApplicationPath = appPath
                 Link = link
