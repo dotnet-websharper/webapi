@@ -1,7 +1,8 @@
 # WebSharper.WebApi
 
-Wrappers for hosting WebSharper sitelets and remoting components with
-[ASP.NET Web API][webapi].
+Wrappers for hosting [WebSharper][ws] sitelets and remoting components
+with [ASP.NET Web API][webapi].  It is designed to work with
+WebSharper 2.5.
 
 * [NuGet][nuget] identifier: `WebSharper.WebApi`
 * [Git sources at GitHub][gh]
@@ -12,7 +13,7 @@ Wrappers for hosting WebSharper sitelets and remoting components with
 ## Usage
 
 Hosting WebSharper code with ASP.NET Web API is primarily useful for
-using WebSharper in an ASP.NET MVC4 projects.
+using WebSharper in ASP.NET MVC4 projects.
 
 Follow these steps to get started with ASP.NET MVC4 and WebSharper:
 
@@ -25,7 +26,7 @@ Follow these steps to get started with ASP.NET MVC4 and WebSharper:
    value.
 
 4. Configure your application to set up WebSharper.WebApi components
-   on initiali zation (see below).  startup
+   on initialization (see below).
 
 ## Configuration
 
@@ -84,3 +85,4 @@ registration matters in cases when you have non-WebSharper routers.
 [license]: http://github.com/intellifactory/websharper.webapi/blob/master/LICENSE.md
 [nuget]: http://nuget.org
 [webapi]: http://www.asp.net/web-api
+[ws]: http://github.com/intellifactory/websharper
