@@ -1,4 +1,7 @@
-^packages/
-^tools/packages/
+packages/
+bin/
+obj/
+Scripts/WebSharper/
+Content/WebSharper/
 ^build/
 \.suo$

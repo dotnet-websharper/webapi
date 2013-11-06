@@ -24,6 +24,26 @@ namespace IntelliFactory.WebSharper.WebApi
 /// to methods annnotated with the `[<Remote>]` attribute.
 module Remoting =
     open System.Web.Http
+    module M = IntelliFactory.WebSharper.Core.Metadata
 
-    /// Registesrs the handler for remoting support.
-    val Register : HttpConfiguration -> unit
+    /// Configures the remoting handler.
+    type Options =
+        {
+            /// WebApi configuration object.
+            HttpConfiguration : HttpConfiguration
+
+            /// WebSharper metadata record.
+            Metadata : M.Info
+        }
+
+        /// Registers the remoting support.
+        member Register : unit -> unit
+
+        /// Creates a new `Options` value.
+        static member Create : HttpConfiguration * M.Info -> Options
+
+    /// Creates a new `Options` value.
+    val Configure : HttpConfiguration -> M.Info -> Options
+
+    /// Registers the remoting support.
+    val Register : Options -> unit

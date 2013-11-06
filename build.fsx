@@ -10,6 +10,7 @@ let main =
             let wsPaths =
                 [
                     "tools/net45/IntelliFactory.Html.dll"
+                    "tools/net45/IntelliFactory.JavaScript.dll"
                     "tools/net45/IntelliFactory.WebSharper.dll"
                     "tools/net45/IntelliFactory.WebSharper.Core.dll"
                     "tools/net45/IntelliFactory.WebSharper.Sitelets.dll"
@@ -19,7 +20,7 @@ let main =
                 r.Assembly("System.Configuration")
                 r.Assembly("System.Web")
                 r.NuGet("Microsoft.AspNet.WebApi.Core")
-                    .Version("4.0.30506.0")
+                    .Version("5.0.0")
                     .Reference()
                 r.NuGet("WebSharper").At(wsPaths).Reference()
             ])

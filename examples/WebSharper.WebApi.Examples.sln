@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Web
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OwinSelfHost", "OwinSelfHost\OwinSelfHost.fsproj", "{11AD3835-0491-4710-99C1-04D10855DCE3}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Sitelets", "Sitelets\Sitelets.fsproj", "{6514F0E1-3D89-48AA-AA1E-65C38F0742D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11AD3835-0491-4710-99C1-04D10855DCE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AD3835-0491-4710-99C1-04D10855DCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AD3835-0491-4710-99C1-04D10855DCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AD3835-0491-4710-99C1-04D10855DCE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6514F0E1-3D89-48AA-AA1E-65C38F0742D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6514F0E1-3D89-48AA-AA1E-65C38F0742D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6514F0E1-3D89-48AA-AA1E-65C38F0742D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6514F0E1-3D89-48AA-AA1E-65C38F0742D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

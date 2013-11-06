@@ -23,11 +23,33 @@ namespace IntelliFactory.WebSharper.WebApi
 module SiteletHosting =
     open System
     open System.Web.Http
+    open IntelliFactory.WebSharper
     open IntelliFactory.WebSharper.Sitelets
 
     /// An immutable type for configuring how to host sitelets using WebAPI.
-    [<Sealed>]
     type Options =
+        {
+            /// The `Debug` flag for WebSharper.
+            Debug : bool
+
+            /// Configuration object from WebApi.
+            HttpConfiguration : HttpConfiguration
+
+            /// Json provider used by WebSharper.
+            JsonProvider : Core.Json.Provider
+
+            /// Metadata object used by WebSharper.
+            Metadata : Core.Metadata.Info
+
+            /// The absolute path to the application root directory on
+            /// the file system, which is by default set to ".".
+            /// It is recommended to set this to `Server.MapPath("~")`.
+            ServerRootDirectory : string
+
+            /// The URL prefix, such as `websharper`, to have the
+            /// sitelet served under a sub-URL.
+            UrlPrefix : string
+        }
 
         /// Registers a sitelet with current options.
         member Register : Sitelet<'T> -> unit
@@ -50,21 +72,12 @@ module SiteletHosting =
         /// It is recommended to set this to `Server.MapPath("~")`.
         member WithServerRootDirectory : string -> Options
 
-        /// See `WithDebug.`
-        member Debug : bool
-
-        /// See `WithHttpConfiguration.`
-        member HttpConfiguration : HttpConfiguration
-
-        /// See `WithServerRootDirectory.`
-        member ServerRootDirectory : string
-
-        /// See `WithUrlPrefix.`
-        member UrlPrefix : string
-
         /// Constructs a new sitelet hosting configuration based on the
         /// WebAPI configurator object.
         static member Create : config: HttpConfiguration -> Options
+
+        /// Construction function with a specific `Metadata.Info` object.
+        static member Create : config: HttpConfiguration * Core.Metadata.Info -> Options
 
     /// Registers a sitelet for hosting with WebAPI. This is typically called
     /// on application startup.

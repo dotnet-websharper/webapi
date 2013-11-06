@@ -48,33 +48,42 @@ module SiteletHosting =
 
     type Options =
         {
-            SDebug : bool
-            SHttpConfiguration : HttpConfiguration
-            SServerRootDirectory : string
-            SUrlPrefix : string
+            Debug : bool
+            HttpConfiguration : HttpConfiguration
+            JsonProvider : Core.Json.Provider
+            Metadata : Core.Metadata.Info
+            ServerRootDirectory : string
+            UrlPrefix : string
         }
 
         member o.WithDebug() = o.WithDebug(true)
-        member o.WithDebug(d) = { o with SDebug = d }
-        member o.WithHttpConfiguration(c) =  { o with SHttpConfiguration = c }
-        member o.WithServerRootDirectory(d) = { o with SServerRootDirectory = d }
-        member o.WithUrlPrefix(t) = { o with SUrlPrefix = t }
-
-        member o.Debug = o.SDebug
-        member o.HttpConfiguration = o.SHttpConfiguration
-        member o.ServerRootDirectory = o.SServerRootDirectory
-        member o.UrlPrefix = o.SUrlPrefix
+        member o.WithDebug(d) = { o with Debug = d }
+        member o.WithHttpConfiguration(c) = { o with HttpConfiguration = c }
+        member o.WithServerRootDirectory(d) = { o with ServerRootDirectory = d }
+        member o.WithUrlPrefix(t) = { o with UrlPrefix = t }
 
         static member Create(conf) =
             {
-                SDebug = false
-                SHttpConfiguration = conf
-                SServerRootDirectory = "."
-                SUrlPrefix = ""
+                Debug = false
+                JsonProvider = Core.Json.Provider.Create()
+                Metadata = Core.Metadata.Info.Create([])
+                HttpConfiguration = conf
+                ServerRootDirectory = "."
+                UrlPrefix = ""
+            }
+
+        static member Create(conf, meta) =
+            {
+                Debug = false
+                JsonProvider = Core.Json.Provider.CreateTyped(meta)
+                Metadata = meta
+                HttpConfiguration = conf
+                ServerRootDirectory = "."
+                UrlPrefix = ""
             }
 
     let routeTemplate cfg =
-        match cfg.SUrlPrefix with
+        match cfg.UrlPrefix with
         | "" -> "{*action}"
         | p -> p + "/{*action}"
 
@@ -204,7 +213,7 @@ module SiteletHosting =
         msg
 
     let buildResourceContext cfg : Res.Context =
-        let isDebug = cfg.SDebug
+        let isDebug = cfg.Debug
         let pu = P.PathUtility.VirtualPaths(cfg.HttpConfiguration.VirtualPathRoot)
         {
             DebuggingEnabled = isDebug
@@ -229,9 +238,9 @@ module SiteletHosting =
         }
 
     [<Sealed>]
-    type ContextBuilder(cfg: Options) =
-        let info = IntelliFactory.WebSharper.Web.Shared.Metadata
-        let json = IntelliFactory.WebSharper.Web.Shared.Json
+    type ContextBuilder(cfg) =
+        let info = cfg.Metadata
+        let json = cfg.JsonProvider
         let appPath = cfg.HttpConfiguration.VirtualPathRoot
         let resContext = buildResourceContext cfg
 

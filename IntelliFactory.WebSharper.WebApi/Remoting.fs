@@ -25,8 +25,14 @@ module Remoting =
     open System.Net.Http.Headers
     open System.Text
     open System.Web.Http
+    open IntelliFactory.WebSharper
     module Rem = IntelliFactory.WebSharper.Core.Remoting
-    module Sh = IntelliFactory.WebSharper.Web.Shared
+
+    type Options =
+        {
+            HttpConfiguration : HttpConfiguration
+            Metadata : Core.Metadata.Info
+        }
 
     let getHeader (req: HttpRequestMessage) (name: string) =
         let mutable out = null
@@ -39,9 +45,9 @@ module Remoting =
     let utf8 = UTF8Encoding(false, true)
 
     [<Sealed>]
-    type RemotingHandler() =
+    type RemotingHandler(opts) =
         inherit DelegatingHandler()
-        let serv = Rem.Server.Create None Sh.Metadata
+        let serv = Rem.Server.Create None opts.Metadata
 
         override dh.SendAsync(req, t) =
             let headers = getHeader req
@@ -68,5 +74,20 @@ module Remoting =
             else
                 base.SendAsync(req, t)
 
-    let Register (conf: HttpConfiguration) =
-        conf.MessageHandlers.Add(new RemotingHandler())
+    type Options with
+
+        static member Create(conf, meta) =
+            {
+                HttpConfiguration = conf
+                Metadata = meta
+            }
+
+        member opts.Register() =
+            new RemotingHandler(opts)
+            |> opts.HttpConfiguration.MessageHandlers.Add
+
+    let Configure conf meta =
+        Options.Create(conf, meta)
+
+    let Register (opts: Options) =
+        opts.Register()
