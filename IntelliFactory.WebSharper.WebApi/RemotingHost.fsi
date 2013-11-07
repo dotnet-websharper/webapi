@@ -22,7 +22,7 @@ namespace IntelliFactory.WebSharper.WebApi
 /// Implements server-side remoting support under Web API.
 /// Remoting support is needed for the server to respond to client calls
 /// to methods annnotated with the `[<Remote>]` attribute.
-module Remoting =
+module RemotingHost =
     open System.Web.Http
     module M = IntelliFactory.WebSharper.Core.Metadata
 

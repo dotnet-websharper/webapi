@@ -19,7 +19,7 @@
 
 namespace IntelliFactory.WebSharper.WebApi
 
-module SiteletHosting =
+module SiteletHost =
     open System
     open System.Collections.Generic
     open System.Collections.Specialized

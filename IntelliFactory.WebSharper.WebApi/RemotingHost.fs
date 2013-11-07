@@ -19,7 +19,7 @@
 
 namespace IntelliFactory.WebSharper.WebApi
 
-module Remoting =
+module RemotingHost =
     open System.Net
     open System.Net.Http
     open System.Net.Http.Headers

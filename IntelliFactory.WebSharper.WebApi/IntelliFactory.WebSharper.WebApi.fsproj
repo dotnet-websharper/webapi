@@ -7,10 +7,11 @@
     <OutputPath>../build/net45</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SiteletHosting.fsi" />
-    <Compile Include="SiteletHosting.fs" />
-    <Compile Include="Remoting.fsi" />
-    <Compile Include="Remoting.fs" />
+    <Compile Include="SiteletHost.fsi" />
+    <Compile Include="SiteletHost.fs" />
+    <Compile Include="RemotingHost.fsi" />
+    <Compile Include="RemotingHost.fs" />
+    <Compile Include="Extensions.fs" />
   </ItemGroup>
   <Import Project="../build/net45/$(Name).proj" />
   <Import Project="$(MSBuildExtensionsPath32)/../Microsoft SDKs/F#/3.0/Framework/v4.0/Microsoft.FSharp.targets" />

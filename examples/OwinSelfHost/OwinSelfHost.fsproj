@@ -52,7 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="IntelliFactory.WebSharper.WebApi">
-      <HintPath>..\packages\WebSharper.WebApi.2.5.7-alpha\lib\net45\IntelliFactory.WebSharper.WebApi.dll</HintPath>
+      <HintPath>..\packages\WebSharper.WebApi.2.5.2-alpha\lib\net45\IntelliFactory.WebSharper.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin">

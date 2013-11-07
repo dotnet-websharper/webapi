@@ -20,7 +20,7 @@
 namespace IntelliFactory.WebSharper.WebApi
 
 /// Supports hosting WebSharper sitelets and remoting components in WebAPI.
-module SiteletHosting =
+module SiteletHost =
     open System
     open System.Web.Http
     open IntelliFactory.WebSharper
