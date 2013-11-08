@@ -38,6 +38,9 @@
     <None Include="packages.config" />
     <None Include="app.config" />
   </ItemGroup>
+  <PropertyGroup>
+    <LocalBuild>../../build/net45/IntelliFactory.WebSharper.WebApi.dll</LocalBuild>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="IntelliFactory.JavaScript">
       <HintPath>..\packages\WebSharper.2.5.72.71-alpha\tools\net45\IntelliFactory.JavaScript.dll</HintPath>
@@ -51,7 +54,11 @@
       <HintPath>..\packages\WebSharper.2.5.72.71-alpha\tools\net45\IntelliFactory.WebSharper.Sitelets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IntelliFactory.WebSharper.WebApi">
+    <Reference Include="IntelliFactory.WebSharper.WebApi" Condition="Exists('$(LocalBuild)')">
+      <HintPath>$(LocalBuild)</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.WebApi" Condition="!Exists('$(LocalBuild)')">
       <HintPath>..\packages\WebSharper.WebApi.2.5.2-alpha\lib\net45\IntelliFactory.WebSharper.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -81,6 +88,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>True</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">

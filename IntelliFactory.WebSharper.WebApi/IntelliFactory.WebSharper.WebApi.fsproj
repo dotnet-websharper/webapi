@@ -5,16 +5,24 @@
     <ProjectGuid>d5b94723-f0e0-4e68-be0e-a17cfec46f29</ProjectGuid>
     <Name>IntelliFactory.WebSharper.WebApi</Name>
     <OutputPath>../build/net45</OutputPath>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
+  <Import Project="../build/net45/$(Name).proj" />
+  <Import Project="$(MSBuildExtensionsPath32)/../Microsoft SDKs/F#/3.0/Framework/v4.0/Microsoft.FSharp.targets" />
   <ItemGroup>
     <Compile Include="SiteletHost.fsi" />
     <Compile Include="SiteletHost.fs" />
     <Compile Include="RemotingHost.fsi" />
     <Compile Include="RemotingHost.fs" />
+    <Compile Include="Extensions.fsi" />
     <Compile Include="Extensions.fs" />
   </ItemGroup>
-  <Import Project="../build/net45/$(Name).proj" />
-  <Import Project="$(MSBuildExtensionsPath32)/../Microsoft SDKs/F#/3.0/Framework/v4.0/Microsoft.FSharp.targets" />
-  <Target Name="Build" />
-  <Target Name="Clean" />
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>True</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -21,18 +21,41 @@ namespace IntelliFactory.WebSharper.WebApi
 
 [<AutoOpen>]
 module Extensions =
+    open System
     open System.IO
+    open System.Reflection
     open System.Web.Http
     module M = IntelliFactory.WebSharper.Core.Metadata
     open IntelliFactory.WebSharper.Sitelets
 
+    type Assembly =
+
+        static member LoadFileInfo(info: FileInfo) =
+            let name = AssemblyName.GetAssemblyName(info.FullName)
+            match Assembly.TryLoad(name) with
+            | None -> Assembly.LoadFrom(info.FullName)
+            | Some a -> a
+
+        static member TryLoad(name: AssemblyName) =
+            try
+                match Assembly.Load(name) with
+                | null -> None
+                | a -> Some a
+            with _ -> None
+
+    type DirectoryInfo with
+
+        member dir.DiscoverAssemblies() =
+            let ls pat = dir.EnumerateFiles(pat)
+            let ( @ ) = Seq.append
+            ls "*.dll" @ ls "*.exe"
+
     type M.Info with
 
         static member LoadFromBinDirectory(binDirectory: string) =
-            let ls pat = Directory.EnumerateFiles(binDirectory, pat)
-            let ( @ ) = Seq.append
-            ls "*.dll" @ ls "*.exe"
-            |> Seq.choose (fun f -> M.AssemblyInfo.Load(f))
+            let d = DirectoryInfo(binDirectory)
+            d.DiscoverAssemblies()
+            |> Seq.choose (fun f -> M.AssemblyInfo.Load(f.FullName))
             |> M.Info.Create
 
         static member LoadFromWebRoot(webRoot: string) =
@@ -50,3 +73,20 @@ module Extensions =
                 .WithServerRootDirectory(webRoot)
                 .Register(sitelet)
             RemotingHost.Options.Create(conf, meta).Register()
+
+        member conf.RegisterDiscoveredSitelet(webRoot: string) =
+            let binDir = DirectoryInfo(Path.Combine(webRoot, "bin"))
+            let ok =
+                binDir.DiscoverAssemblies()
+                |> Seq.tryPick (fun assem ->
+                    let assem = Assembly.LoadFileInfo(assem)
+                    let aT = typeof<WebsiteAttribute>
+                    match Attribute.GetCustomAttribute(assem, aT) with
+                    | :? WebsiteAttribute as attr ->
+                        let (sitelet, actions) = attr.Run()
+                        conf.RegisterDefaultSitelet(webRoot, sitelet)
+                        Some ()
+                    | _ -> None)
+            match ok with
+            | None -> failwith "Failed to discover sitelet assemblies"
+            | Some () -> ()

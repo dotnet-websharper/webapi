@@ -19,8 +19,9 @@ type Startup() =
         printfn "Configuring with %s" webRoot
         let conf =
             let c = new HttpConfiguration()
-            let s = global.Sitelets.Site.Main
-            c.RegisterDefaultSitelet(webRoot, s)
+            // let s = global.Sitelets.Site.Main
+            // c.RegisterDefaultSitelet(webRoot, s)
+            c.RegisterDiscoveredSitelet(webRoot)
             c
         appB.UseStaticFiles(webRoot)
             .UseWebApi(conf)
