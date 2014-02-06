@@ -20,7 +20,7 @@ let main =
                 r.Assembly("System.Configuration")
                 r.Assembly("System.Web")
                 r.NuGet("Microsoft.AspNet.WebApi.Core")
-                    .Version("5.0.0")
+                    .Version("5.1.0")
                     .Reference()
                 r.NuGet("WebSharper").At(wsPaths).Reference()
             ])

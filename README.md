@@ -37,12 +37,7 @@ Follow these steps to get started with ASP.NET MVC4 and WebSharper:
 
 ### OWIN / Standalone Use
 
-Please see the provided example under `examples/`. NOTE: we are
-currently (November 2013) relying on static file serving components
-from the [Katana][katana] project that are not publically released yet,
-but are scheduled for release on January 2014.  To compile the example,
-follow the instructions from the [Katana][katana] website to add their
-nightly signed releases feed to NuGet package manager.
+Please see the provided example under `examples/`.
 
 ## Configuration
 

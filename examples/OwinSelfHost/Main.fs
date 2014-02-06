@@ -3,6 +3,7 @@
 open System.IO
 open System.Web.Http
 open global.Owin
+open Microsoft.Owin
 open Microsoft.Owin.Hosting
 open Microsoft.Owin.Extensions
 open Microsoft.Owin.Helpers
@@ -23,7 +24,10 @@ type Startup() =
             // c.RegisterDefaultSitelet(webRoot, s)
             c.RegisterDiscoveredSitelet(webRoot)
             c
-        appB.UseStaticFiles(webRoot)
+        appB.UseStaticFiles(
+                StaticFiles.StaticFileOptions(
+                    RequestPath = PathString(""),
+                    FileSystem = FileSystems.PhysicalFileSystem(webRoot)))
             .UseWebApi(conf)
         |> ignore
 
